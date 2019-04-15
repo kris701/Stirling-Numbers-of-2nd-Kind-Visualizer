@@ -1,0 +1,10 @@
+C:\Users\Kristian\OneDrive\Programming\C#\Unfinished\SplitListIntoNGroups\SplitListIntoNGroups\obj\Debug\netcoreapp2.1\SplitListIntoNGroups.csproj.CoreCompileInputs.cache
+C:\Users\Kristian\OneDrive\Programming\C#\Unfinished\SplitListIntoNGroups\SplitListIntoNGroups\obj\Debug\netcoreapp2.1\SplitListIntoNGroups.AssemblyInfoInputs.cache
+C:\Users\Kristian\OneDrive\Programming\C#\Unfinished\SplitListIntoNGroups\SplitListIntoNGroups\obj\Debug\netcoreapp2.1\SplitListIntoNGroups.AssemblyInfo.cs
+C:\Users\Kristian\OneDrive\Programming\C#\Unfinished\SplitListIntoNGroups\SplitListIntoNGroups\bin\Debug\netcoreapp2.1\SplitListIntoNGroups.deps.json
+C:\Users\Kristian\OneDrive\Programming\C#\Unfinished\SplitListIntoNGroups\SplitListIntoNGroups\bin\Debug\netcoreapp2.1\SplitListIntoNGroups.runtimeconfig.json
+C:\Users\Kristian\OneDrive\Programming\C#\Unfinished\SplitListIntoNGroups\SplitListIntoNGroups\bin\Debug\netcoreapp2.1\SplitListIntoNGroups.runtimeconfig.dev.json
+C:\Users\Kristian\OneDrive\Programming\C#\Unfinished\SplitListIntoNGroups\SplitListIntoNGroups\bin\Debug\netcoreapp2.1\SplitListIntoNGroups.dll
+C:\Users\Kristian\OneDrive\Programming\C#\Unfinished\SplitListIntoNGroups\SplitListIntoNGroups\bin\Debug\netcoreapp2.1\SplitListIntoNGroups.pdb
+C:\Users\Kristian\OneDrive\Programming\C#\Unfinished\SplitListIntoNGroups\SplitListIntoNGroups\obj\Debug\netcoreapp2.1\SplitListIntoNGroups.dll
+C:\Users\Kristian\OneDrive\Programming\C#\Unfinished\SplitListIntoNGroups\SplitListIntoNGroups\obj\Debug\netcoreapp2.1\SplitListIntoNGroups.pdb

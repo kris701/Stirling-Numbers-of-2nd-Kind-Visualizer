@@ -1,0 +1,10 @@
+C:\Users\Kristian\OneDrive\Programming\_ GitHub _\Stirling Numbers of 2nd Kind Visualizer\Github\Stirling-Numbers-of-2nd-Kind-Visualizer\Source Code\SNo2KV\bin\Release\netcoreapp2.1\SNo2KV.deps.json
+C:\Users\Kristian\OneDrive\Programming\_ GitHub _\Stirling Numbers of 2nd Kind Visualizer\Github\Stirling-Numbers-of-2nd-Kind-Visualizer\Source Code\SNo2KV\bin\Release\netcoreapp2.1\SNo2KV.runtimeconfig.json
+C:\Users\Kristian\OneDrive\Programming\_ GitHub _\Stirling Numbers of 2nd Kind Visualizer\Github\Stirling-Numbers-of-2nd-Kind-Visualizer\Source Code\SNo2KV\bin\Release\netcoreapp2.1\SNo2KV.runtimeconfig.dev.json
+C:\Users\Kristian\OneDrive\Programming\_ GitHub _\Stirling Numbers of 2nd Kind Visualizer\Github\Stirling-Numbers-of-2nd-Kind-Visualizer\Source Code\SNo2KV\bin\Release\netcoreapp2.1\SNo2KV.dll
+C:\Users\Kristian\OneDrive\Programming\_ GitHub _\Stirling Numbers of 2nd Kind Visualizer\Github\Stirling-Numbers-of-2nd-Kind-Visualizer\Source Code\SNo2KV\bin\Release\netcoreapp2.1\SNo2KV.pdb
+C:\Users\Kristian\OneDrive\Programming\_ GitHub _\Stirling Numbers of 2nd Kind Visualizer\Github\Stirling-Numbers-of-2nd-Kind-Visualizer\Source Code\SNo2KV\obj\Release\netcoreapp2.1\SNo2KV.csproj.CoreCompileInputs.cache
+C:\Users\Kristian\OneDrive\Programming\_ GitHub _\Stirling Numbers of 2nd Kind Visualizer\Github\Stirling-Numbers-of-2nd-Kind-Visualizer\Source Code\SNo2KV\obj\Release\netcoreapp2.1\SNo2KV.AssemblyInfoInputs.cache
+C:\Users\Kristian\OneDrive\Programming\_ GitHub _\Stirling Numbers of 2nd Kind Visualizer\Github\Stirling-Numbers-of-2nd-Kind-Visualizer\Source Code\SNo2KV\obj\Release\netcoreapp2.1\SNo2KV.AssemblyInfo.cs
+C:\Users\Kristian\OneDrive\Programming\_ GitHub _\Stirling Numbers of 2nd Kind Visualizer\Github\Stirling-Numbers-of-2nd-Kind-Visualizer\Source Code\SNo2KV\obj\Release\netcoreapp2.1\SNo2KV.dll
+C:\Users\Kristian\OneDrive\Programming\_ GitHub _\Stirling Numbers of 2nd Kind Visualizer\Github\Stirling-Numbers-of-2nd-Kind-Visualizer\Source Code\SNo2KV\obj\Release\netcoreapp2.1\SNo2KV.pdb
