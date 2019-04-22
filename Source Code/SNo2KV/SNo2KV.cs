@@ -6,13 +6,15 @@ namespace SplitListIntoNGroups
     //Simple Class to split a set of numbers into a set of lists.
 
     //Sample of usage:
-    //SplitListIntoKGroups( FromNumber, ToNumber, NumberOfGroups)
-    //SplitListIntoKGroups(List<int> SenderGroup, NumberOfGroups)
+    //SplitListIntoKGroups( FromNumber, ToNumber, NumberOfGroups, DisplayMode)
+    //SplitListIntoKGroups(List<int> SenderGroup, NumberOfGroups, DisplayMode)
+
+    enum DisplayMode { Normal, Every10, Every100, Every1000 };
 
     class SNo2KV
     {
         //Main Call void
-        static public void SplitListIntoKGroups(int FromNumber, int ToNumber, int NumberOfGroups)
+        static public void SplitListIntoKGroups(int FromNumber, int ToNumber, int NumberOfGroups, DisplayMode _DisplayMode)
         {
             //Simple catchers to make sure no error values gets in and crashes the program
             if (FromNumber <= 0)
@@ -66,10 +68,10 @@ namespace SplitListIntoNGroups
             Console.WriteLine("Splitting the numbers " + FromNumber + " to " + ToNumber + " into all possible " + NumberOfGroups + " groups.");
             Console.WriteLine("");
 
-            InnerSplitListIntoKGroups(NewGroups, NumberOfGroups, ToNumber + 1 - NumberOfGroups - 1);
+            InnerSplitListIntoKGroups(NewGroups, NumberOfGroups, ToNumber + 1 - NumberOfGroups - 1, _DisplayMode);
         }
 
-        static public void SplitListIntoKGroupsFromList(List<int> SenderGroup, int NumberOfGroups)
+        static public void SplitListIntoKGroupsFromList(List<int> SenderGroup, int NumberOfGroups, DisplayMode _DisplayMode)
         {
             //Simple catchers to make sure no error values gets in and crashes the program
             if (NumberOfGroups <= 2)
@@ -120,23 +122,31 @@ namespace SplitListIntoNGroups
             Console.WriteLine("] into all possible " + NumberOfGroups + " groups.");
             Console.WriteLine("");
 
-            InnerSplitListIntoKGroups(NewGroups, NumberOfGroups, SortedSenderGroup.Count + 1 - NumberOfGroups - 1);
+            InnerSplitListIntoKGroups(NewGroups, NumberOfGroups, SortedSenderGroup.Count + 1 - NumberOfGroups - 1, _DisplayMode);
         }
 
-        static private void InnerSplitListIntoKGroups(List<List<int>> NewGroups, int NumberOfGroups, int MaxIndexLength)
+        static private void InnerSplitListIntoKGroups(List<List<int>> NewGroups, int NumberOfGroups, int MaxIndexLength, DisplayMode _DisplayMode)
         {
             // Stopwatch to get the execution time
             var watch = System.Diagnostics.Stopwatch.StartNew();
+            var RPSwatch = System.Diagnostics.Stopwatch.StartNew();
             int NumberOfCombinations = 1;
+            int RPSNumberOfCombinations = 1;
 
             //Prints the initial groups:
             SortAllList(NewGroups);
-            PrintLists(NewGroups, NumberOfCombinations);
+            PrintLists(NewGroups, NumberOfCombinations, _DisplayMode);
 
             //Starting index will always be the last group:
             int Index = NumberOfGroups - 1;
             while (NewGroups[0][0] == 0)
             {
+                if (RPSwatch.ElapsedMilliseconds >= 1000)
+                {
+                    Console.Title = "Renderings pr Second: " + (NumberOfCombinations - RPSNumberOfCombinations);
+                    RPSNumberOfCombinations = NumberOfCombinations;
+                    RPSwatch.Restart();
+                }
                 Index = NumberOfGroups - 1;
                 //Checks if the current group is empty, if it is, go to the next group
                 while (NewGroups[Index][MaxIndexLength - 1] == 0)
@@ -161,7 +171,7 @@ namespace SplitListIntoNGroups
                     }
                     Index--;
                     NumberOfCombinations++;
-                    PrintLists(NewGroups, NumberOfCombinations);
+                    PrintLists(NewGroups, NumberOfCombinations, _DisplayMode);
                     continue;
                 }
 
@@ -171,7 +181,7 @@ namespace SplitListIntoNGroups
                     MoveNumberToOtherList(NewGroups[Index - 1], NewGroups[Index], false);
                     SortAllList(NewGroups);
                     NumberOfCombinations++;
-                    PrintLists(NewGroups, NumberOfCombinations);
+                    PrintLists(NewGroups, NumberOfCombinations, _DisplayMode);
                 }
 
                 //When that cant be done anymore, move one number even further back, and sort the groups.
@@ -189,12 +199,14 @@ namespace SplitListIntoNGroups
                 }
 
                 NumberOfCombinations++;
-                PrintLists(NewGroups, NumberOfCombinations);
+                PrintLists(NewGroups, NumberOfCombinations, _DisplayMode);
             }
 
             //Stops the stopwatch
             watch.Stop();
+            RPSwatch.Stop();
 
+            Console.Title = "Done";
             Console.WriteLine("");
             Console.WriteLine("Done! A total of " + NumberOfCombinations + " combinations took " + watch.ElapsedMilliseconds + " ms");
 
@@ -242,17 +254,43 @@ namespace SplitListIntoNGroups
         }
 
         //Prints all lists in a structured way
-        static private void PrintLists(List<List<int>> Groups, int Itteration)
+        static private void PrintLists(List<List<int>> Groups, int Itteration, DisplayMode _DisplayMode)
         {
-            string AddSpaces = "    : ";
+            if (_DisplayMode == DisplayMode.Every10)
+                if (Itteration % 10 == 0)
+                    InnerPrintLists(Groups, Itteration);
+
+            if (_DisplayMode == DisplayMode.Every100)
+                if (Itteration % 100 == 0)
+                    InnerPrintLists(Groups, Itteration);
+
+            if (_DisplayMode == DisplayMode.Every1000)
+                if (Itteration % 1000 == 0)
+                    InnerPrintLists(Groups, Itteration);
+
+            if (_DisplayMode == DisplayMode.Normal)
+                InnerPrintLists(Groups, Itteration);
+        }
+
+        static private void InnerPrintLists(List<List<int>> Groups, int Itteration)
+        {
+            string AddSpaces = "          : ";
             if (Itteration >= 10)
-                AddSpaces = "   : ";
+                AddSpaces = "        : ";
             if (Itteration >= 100)
-                AddSpaces = "  : ";
+                AddSpaces = "       : ";
             if (Itteration >= 1000)
-                AddSpaces = " : ";
+                AddSpaces = "      : ";
             if (Itteration >= 10000)
-                AddSpaces = ": ";
+                AddSpaces = "     : ";
+            if (Itteration >= 100000)
+                AddSpaces = "    : ";
+            if (Itteration >= 1000000)
+                AddSpaces = "   : ";
+            if (Itteration >= 10000000)
+                AddSpaces = "  : ";
+            if (Itteration >= 100000000)
+                AddSpaces = " : ";
             Console.Write(Itteration + AddSpaces);
 
             foreach (List<int> InnerList in Groups)
