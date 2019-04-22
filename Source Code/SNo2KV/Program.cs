@@ -14,7 +14,7 @@
 
             //Can also accept a custom list as well as showing the displaymodes:
 
-            SNo2KV.SplitListIntoKGroupsFromList(new System.Collections.Generic.List<int>(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 100, 101, 102, 103,104,105,106,107,108,109,201,202,203,204,205,206,207,208,209,210 }), 4, DisplayMode.Every100);
+            SNo2KV.SplitListIntoKGroupsFromList(new System.Collections.Generic.List<int>(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 100, 101, 102, 103,104,105,106,107,108,109,201,202,203,204,205,206,207,208,209,210 }), 4, DisplayMode.Every10);
 
             SNo2KV.SplitListIntoKGroupsFromList(new System.Collections.Generic.List<int>(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 8, 8, 8, 8, 8, 8, 9, 20, 20, 20, 20, 20, 21, 21, 21, 21, 23, 70, 70, 70, 71, 71, 71, 71, 71, 71, 100, 200, 1000, 2000 }), 8, DisplayMode.Every1000);
 

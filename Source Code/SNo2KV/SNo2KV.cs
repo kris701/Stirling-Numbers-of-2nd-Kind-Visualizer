@@ -62,7 +62,8 @@ namespace SplitListIntoNGroups
                     InnerList[0] = Count;
                     Count++;
                 }
-                NewGroups.Add(SortList(InnerList));
+                InnerList.Sort((a, b) => a - b);
+                NewGroups.Add(InnerList);
             }
 
             Console.WriteLine("Splitting the numbers " + FromNumber + " to " + ToNumber + " into all possible " + NumberOfGroups + " groups.");
@@ -92,37 +93,37 @@ namespace SplitListIntoNGroups
             }
 
             //Sorts the sender group
-            List<int> SortedSenderGroup = SortList(SenderGroup);
+            SenderGroup.Sort((a, b) => a - b);
 
             //Initializing the groups, much like the upper function
             List<List<int>> NewGroups = new List<List<int>>();
             int CurrentIndex = 0;
             for (int i = 0; i < NumberOfGroups; i++)
             {
-                List<int> InnerNewGroup = new List<int>(new int[SortedSenderGroup.Count + 1 - NumberOfGroups]);
+                List<int> InnerNewGroup = new List<int>(new int[SenderGroup.Count + 1 - NumberOfGroups]);
                 if (i == NumberOfGroups - 1)
                 {
-                    for (int j = 0; j < SortedSenderGroup.Count + 1 - NumberOfGroups; j++)
+                    for (int j = 0; j < SenderGroup.Count + 1 - NumberOfGroups; j++)
                     {
-                        InnerNewGroup[j] = SortedSenderGroup[CurrentIndex];
+                        InnerNewGroup[j] = SenderGroup[CurrentIndex];
                         CurrentIndex++;
                     }
                 }
                 else
                 {
-                    InnerNewGroup[0] = SortedSenderGroup[CurrentIndex];
+                    InnerNewGroup[0] = SenderGroup[CurrentIndex];
                     CurrentIndex++;
                 }
                 NewGroups.Add(InnerNewGroup);
             }
 
             Console.Write("Splitting the numbers [ ");
-            for (int i = 0; i < SortedSenderGroup.Count; i++)
-                Console.Write(SortedSenderGroup[i] + ", ");
+            for (int i = 0; i < SenderGroup.Count; i++)
+                Console.Write(SenderGroup[i] + ", ");
             Console.WriteLine("] into all possible " + NumberOfGroups + " groups.");
             Console.WriteLine("");
 
-            InnerSplitListIntoKGroups(NewGroups, NumberOfGroups, SortedSenderGroup.Count + 1 - NumberOfGroups - 1, _DisplayMode);
+            InnerSplitListIntoKGroups(NewGroups, NumberOfGroups, SenderGroup.Count + 1 - NumberOfGroups - 1, _DisplayMode);
         }
 
         static private void InnerSplitListIntoKGroups(List<List<int>> NewGroups, int NumberOfGroups, int MaxIndexLength, DisplayMode _DisplayMode)
@@ -240,17 +241,7 @@ namespace SplitListIntoNGroups
         static private void SortAllList(List<List<int>> InputList)
         {
             for (int i = 0; i < InputList.Count; i++)
-                InputList[i] = SortList(InputList[i]);
-        }
-
-        //Sorts just one list (sorting can be changed if desired)
-        static private List<int> SortList(List<int> InputList)
-        {
-            List<int> NewList = new List<int>(InputList);
-
-            NewList.Sort((a, b) => a - b);
-
-            return NewList;
+                InputList[i].Sort((a, b) => a - b);
         }
 
         //Prints all lists in a structured way
