@@ -7,7 +7,7 @@ namespace SplitListIntoNGroups
 
     //Sample of usage:
     //SplitListIntoKGroups( FromNumber, ToNumber, NumberOfGroups)
-    //SplitListIntoKGroups( 1, n, k)
+    //SplitListIntoKGroups(List<int> SenderGroup, NumberOfGroups)
 
     class SNo2KV
     {
@@ -36,12 +36,6 @@ namespace SplitListIntoNGroups
                 return;
             }
 
-            // Stopwatch to get the execution time
-            var watch = System.Diagnostics.Stopwatch.StartNew();
-
-            Console.WriteLine("Splitting the numbers " + FromNumber + " to " + ToNumber + " into all possible " + NumberOfGroups + " groups.");
-            Console.WriteLine("");
-
             //Initializer for the groups
             //Taking the numbers FromInt to ToInt into the groups, and the last group gets filled with the rest of numbers
             //Sample:
@@ -69,12 +63,78 @@ namespace SplitListIntoNGroups
                 NewGroups.Add(SortList(InnerList));
             }
 
+            Console.WriteLine("Splitting the numbers " + FromNumber + " to " + ToNumber + " into all possible " + NumberOfGroups + " groups.");
+            Console.WriteLine("");
+
+            InnerSplitListIntoKGroups(NewGroups, NumberOfGroups, ToNumber + 1 - NumberOfGroups - 1);
+        }
+
+        static public void SplitListIntoKGroupsFromList(List<int> SenderGroup, int NumberOfGroups)
+        {
+            //Simple catchers to make sure no error values gets in and crashes the program
+            if (NumberOfGroups <= 0)
+            {
+                Console.WriteLine("NumberOfGroups must be larger than 0!");
+                PrintEndMessage();
+                return;
+            }
+
+            for (int i = 0; i < SenderGroup.Count; i++)
+            {
+                if (SenderGroup[i] <= 0)
+                {
+                    Console.WriteLine("Sendergroup must not contain numbers under 1!");
+                    PrintEndMessage();
+                    return;
+                }
+            }
+
+            //Sorts the sender group
+            List<int> SortedSenderGroup = SortList(SenderGroup);
+
+            //Initializing the groups, much like the upper function
+            List<List<int>> NewGroups = new List<List<int>>();
+            int CurrentIndex = 0;
+            for (int i = 0; i < NumberOfGroups; i++)
+            {
+                List<int> InnerNewGroup = new List<int>(new int[SortedSenderGroup.Count - NumberOfGroups]);
+                if (i == NumberOfGroups - 1)
+                {
+                    for (int j = 0; j < SortedSenderGroup.Count - NumberOfGroups; j++)
+                    {
+                        InnerNewGroup[j] = SortedSenderGroup[CurrentIndex];
+                        CurrentIndex++;
+                    }
+                }
+                else
+                {
+                    InnerNewGroup[0] = SortedSenderGroup[CurrentIndex];
+                    CurrentIndex++;
+                }
+                NewGroups.Add(InnerNewGroup);
+            }
+
+            Console.Write("Splitting the numbers [ ");
+            for (int i = 0; i < SortedSenderGroup.Count; i++)
+                Console.Write(SortedSenderGroup[i] + ", ");
+            Console.WriteLine("] into all possible " + NumberOfGroups + " groups.");
+            Console.WriteLine("");
+
+            InnerSplitListIntoKGroups(NewGroups, NumberOfGroups, SortedSenderGroup.Count - NumberOfGroups - 1);
+        }
+
+        static private void InnerSplitListIntoKGroups(List<List<int>> NewGroups, int NumberOfGroups, int MaxIndexLength)
+        {
+            // Stopwatch to get the execution time
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            int NumberOfCombinations = 1;
+
             //Prints the initial groups:
             PrintLists(NewGroups);
 
             //Continue moving numbers arround until the first group gets all the numbers it can get
             int Index = NumberOfGroups - 1;
-            while (NewGroups[0][ToNumber + 1 - NumberOfGroups - 1] == 0)
+            while (NewGroups[0][MaxIndexLength] == 0)
             {
                 //Move numbers from the current targeted group to the next, sorting it and displaying all the groups:
                 while (NewGroups[Index][1] != 0)
@@ -83,6 +143,7 @@ namespace SplitListIntoNGroups
                     SortAllList(NewGroups);
 
                     PrintLists(NewGroups);
+                    NumberOfCombinations++;
                 }
 
                 //Check if we are on the last group
@@ -105,6 +166,7 @@ namespace SplitListIntoNGroups
 
                     //And print the groups again.
                     PrintLists(NewGroups);
+                    NumberOfCombinations++;
                 }
             }
 
@@ -112,7 +174,7 @@ namespace SplitListIntoNGroups
             watch.Stop();
 
             Console.WriteLine("");
-            Console.WriteLine("Done! Took " + watch.ElapsedMilliseconds + " ms");
+            Console.WriteLine("Done! A total of " + NumberOfCombinations + " combinations took " + watch.ElapsedMilliseconds + " ms");
 
             PrintEndMessage();
         }

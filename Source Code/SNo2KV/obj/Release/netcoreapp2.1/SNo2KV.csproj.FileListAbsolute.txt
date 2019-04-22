@@ -8,3 +8,4 @@ C:\Users\Kristian\OneDrive\Programming\_ GitHub _\Stirling Numbers of 2nd Kind V
 C:\Users\Kristian\OneDrive\Programming\_ GitHub _\Stirling Numbers of 2nd Kind Visualizer\Github\Stirling-Numbers-of-2nd-Kind-Visualizer\Source Code\SNo2KV\obj\Release\netcoreapp2.1\SNo2KV.AssemblyInfo.cs
 C:\Users\Kristian\OneDrive\Programming\_ GitHub _\Stirling Numbers of 2nd Kind Visualizer\Github\Stirling-Numbers-of-2nd-Kind-Visualizer\Source Code\SNo2KV\obj\Release\netcoreapp2.1\SNo2KV.dll
 C:\Users\Kristian\OneDrive\Programming\_ GitHub _\Stirling Numbers of 2nd Kind Visualizer\Github\Stirling-Numbers-of-2nd-Kind-Visualizer\Source Code\SNo2KV\obj\Release\netcoreapp2.1\SNo2KV.pdb
+C:\Users\Kristian\OneDrive\Programming\_ GitHub _\Stirling Numbers of 2nd Kind Visualizer\Github\Stirling-Numbers-of-2nd-Kind-Visualizer\Source Code\SNo2KV\obj\Release\netcoreapp2.1\SNo2KV.csprojAssemblyReference.cache
