@@ -10,9 +10,7 @@
 
             SNo2KV.SplitListIntoKGroups(1, 7, 3);
 
-            SNo2KV.SplitListIntoKGroups(1, 7, 2);
-
-            SNo2KV.SplitListIntoKGroups(1, 10, 6);
+            SNo2KV.SplitListIntoKGroups(1, 10, 5);
 
             //Can also accept a custom list:
 

@@ -29,9 +29,9 @@ namespace SplitListIntoNGroups
                 return;
             }
 
-            if (NumberOfGroups <= 0)
+            if (NumberOfGroups <= 2)
             {
-                Console.WriteLine("NumberOfGroups must be larger than 0!");
+                Console.WriteLine("NumberOfGroups must be larger than 2!");
                 PrintEndMessage();
                 return;
             }
@@ -72,9 +72,9 @@ namespace SplitListIntoNGroups
         static public void SplitListIntoKGroupsFromList(List<int> SenderGroup, int NumberOfGroups)
         {
             //Simple catchers to make sure no error values gets in and crashes the program
-            if (NumberOfGroups <= 0)
+            if (NumberOfGroups <= 2)
             {
-                Console.WriteLine("NumberOfGroups must be larger than 0!");
+                Console.WriteLine("NumberOfGroups must be larger than 2!");
                 PrintEndMessage();
                 return;
             }
@@ -97,10 +97,10 @@ namespace SplitListIntoNGroups
             int CurrentIndex = 0;
             for (int i = 0; i < NumberOfGroups; i++)
             {
-                List<int> InnerNewGroup = new List<int>(new int[SortedSenderGroup.Count - NumberOfGroups]);
+                List<int> InnerNewGroup = new List<int>(new int[SortedSenderGroup.Count + 1 - NumberOfGroups]);
                 if (i == NumberOfGroups - 1)
                 {
-                    for (int j = 0; j < SortedSenderGroup.Count - NumberOfGroups; j++)
+                    for (int j = 0; j < SortedSenderGroup.Count + 1 - NumberOfGroups; j++)
                     {
                         InnerNewGroup[j] = SortedSenderGroup[CurrentIndex];
                         CurrentIndex++;
@@ -120,7 +120,7 @@ namespace SplitListIntoNGroups
             Console.WriteLine("] into all possible " + NumberOfGroups + " groups.");
             Console.WriteLine("");
 
-            InnerSplitListIntoKGroups(NewGroups, NumberOfGroups, SortedSenderGroup.Count - NumberOfGroups - 1);
+            InnerSplitListIntoKGroups(NewGroups, NumberOfGroups, SortedSenderGroup.Count + 1 - NumberOfGroups - 1);
         }
 
         static private void InnerSplitListIntoKGroups(List<List<int>> NewGroups, int NumberOfGroups, int MaxIndexLength)
@@ -130,44 +130,66 @@ namespace SplitListIntoNGroups
             int NumberOfCombinations = 1;
 
             //Prints the initial groups:
-            PrintLists(NewGroups);
+            SortAllList(NewGroups);
+            PrintLists(NewGroups, NumberOfCombinations);
 
-            //Continue moving numbers arround until the first group gets all the numbers it can get
+            //Starting index will always be the last group:
             int Index = NumberOfGroups - 1;
-            while (NewGroups[0][MaxIndexLength] == 0)
+            while (NewGroups[0][0] == 0)
             {
-                //Move numbers from the current targeted group to the next, sorting it and displaying all the groups:
-                while (NewGroups[Index][1] != 0)
+                Index = NumberOfGroups - 1;
+                //Checks if the current group is empty, if it is, go to the next group
+                while (NewGroups[Index][MaxIndexLength - 1] == 0)
+                {
+                    Index--;
+                }
+                if (Index != NumberOfGroups - 1)
+                {
+                    //pushes all remaining numbers back to start
+                    Index++;
+                    if (Index > 1)
+                        MoveNumberToOtherList(NewGroups[Index - 2], NewGroups[Index - 1], false);
+                    SortAllList(NewGroups);
+
+                    for (int i = Index; i <= NumberOfGroups - 1; i++)
+                    {
+                        while (NewGroups[i - 1][MaxIndexLength - 1] != 0)
+                        {
+                            MoveNumberToOtherList(NewGroups[i], NewGroups[i - 1], true);
+                            SortAllList(NewGroups);
+                        }
+                    }
+                    Index--;
+                    NumberOfCombinations++;
+                    PrintLists(NewGroups, NumberOfCombinations);
+                    continue;
+                }
+
+                //Moves numbers from the current group over to the other group
+                while (NewGroups[Index][MaxIndexLength - 1] != 0)
                 {
                     MoveNumberToOtherList(NewGroups[Index - 1], NewGroups[Index], false);
                     SortAllList(NewGroups);
-
-                    PrintLists(NewGroups);
                     NumberOfCombinations++;
+                    PrintLists(NewGroups, NumberOfCombinations);
                 }
 
-                //Check if we are on the last group
-                if (Index - 2 >= 0)
-                {
-                    //Move one number from the group next to the current indexed, to the group before that, as well as sorting the groups again
-                    MoveNumberToOtherList(NewGroups[Index - 2], NewGroups[Index - 1], false);
-                    SortAllList(NewGroups);
+                //When that cant be done anymore, move one number even further back, and sort the groups.
+                MoveNumberToOtherList(NewGroups[Index - 2], NewGroups[Index - 1], false);
+                SortAllList(NewGroups);
 
-                    //Moves all the numbers, exept the lowest one, from the group next to the current index, back into the index.
-                    while (NewGroups[Index - 1][1] != 0)
+                //Revert what was just done, and put all the numbers moved in the start back to the first list
+                for (int i = Index; i <= NumberOfGroups - 1; i++)
+                {
+                    while (NewGroups[i - 1][MaxIndexLength - 1] != 0)
                     {
-                        MoveNumberToOtherList(NewGroups[Index], NewGroups[Index - 1], true);
+                        MoveNumberToOtherList(NewGroups[i], NewGroups[i - 1], true);
                         SortAllList(NewGroups);
                     }
-
-                    //Then if after returning the numbers, that non was acturally returned, decresse the index, and continue.
-                    if (NewGroups[Index][1] == 0)
-                        Index--;
-
-                    //And print the groups again.
-                    PrintLists(NewGroups);
-                    NumberOfCombinations++;
                 }
+
+                NumberOfCombinations++;
+                PrintLists(NewGroups, NumberOfCombinations);
             }
 
             //Stops the stopwatch
@@ -183,11 +205,17 @@ namespace SplitListIntoNGroups
         static private void MoveNumberToOtherList(List<int> ToList, List<int> FromList, bool Inv)
         {
             int CurrentIndex = ToList.IndexOf(0);
-            int CurrentPreIndex = FromList.IndexOf(0) - 1;
-            if (CurrentPreIndex <= -1)
-                CurrentPreIndex = ToList.Capacity - 1;
+            int CurrentPreIndex = FromList.LastIndexOf(0) + 1;
             if (Inv)
+            {
+                CurrentPreIndex = FromList.LastIndexOf(0) - 1;
+                if (FromList[ToList.Count - 1] != 0)
+                    CurrentPreIndex = ToList.Count - 1;
+            }
+            if (CurrentPreIndex <= -1)
                 CurrentPreIndex = 0;
+            if (CurrentPreIndex > ToList.Count - 1)
+                CurrentPreIndex = ToList.Count - 1;
 
             if (FromList[CurrentPreIndex] != 0)
             {
@@ -199,7 +227,7 @@ namespace SplitListIntoNGroups
         //Sorts all lists in a list
         static private void SortAllList(List<List<int>> InputList)
         {
-            for (int i = 0; i < InputList.Count - 1; i++)
+            for (int i = 0; i < InputList.Count; i++)
                 InputList[i] = SortList(InputList[i]);
         }
 
@@ -208,14 +236,25 @@ namespace SplitListIntoNGroups
         {
             List<int> NewList = new List<int>(InputList);
 
-            NewList.Sort((a, b) => b - a);
+            NewList.Sort((a, b) => a - b);
 
             return NewList;
         }
 
         //Prints all lists in a structured way
-        static private void PrintLists(List<List<int>> Groups)
+        static private void PrintLists(List<List<int>> Groups, int Itteration)
         {
+            string AddSpaces = "    : ";
+            if (Itteration >= 10)
+                AddSpaces = "   : ";
+            if (Itteration >= 100)
+                AddSpaces = "  : ";
+            if (Itteration >= 1000)
+                AddSpaces = " : ";
+            if (Itteration >= 10000)
+                AddSpaces = ": ";
+            Console.Write(Itteration + AddSpaces);
+
             foreach (List<int> InnerList in Groups)
             {
                 Console.Write("[ ");
