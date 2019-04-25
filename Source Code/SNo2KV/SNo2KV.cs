@@ -9,7 +9,7 @@ namespace SplitListIntoNGroups
     //SplitListIntoKGroups( FromNumber, ToNumber, NumberOfGroups, DisplayMode)
     //SplitListIntoKGroups(List<int> SenderGroup, NumberOfGroups, DisplayMode)
 
-    enum DisplayMode { Normal, Every10, Every100, Every1000 };
+    enum DisplayMode { Normal, Every10, Every100, Every1000, Every10000, Every100000, None };
 
     class SNo2KV
     {
@@ -160,14 +160,15 @@ namespace SplitListIntoNGroups
                     Index++;
                     if (Index > 1)
                         MoveNumberToOtherList(NewGroups[Index - 2], NewGroups[Index - 1], false);
-                    SortAllList(NewGroups);
+                    SortList(NewGroups[Index - 2]);
 
                     for (int i = Index; i <= NumberOfGroups - 1; i++)
                     {
                         while (NewGroups[i - 1][MaxIndexLength - 1] != 0)
                         {
                             MoveNumberToOtherList(NewGroups[i], NewGroups[i - 1], true);
-                            SortAllList(NewGroups);
+                            SortList(NewGroups[i]);
+                            SortList(NewGroups[i - 1]);
                         }
                     }
                     Index--;
@@ -180,14 +181,14 @@ namespace SplitListIntoNGroups
                 while (NewGroups[Index][MaxIndexLength - 1] != 0)
                 {
                     MoveNumberToOtherList(NewGroups[Index - 1], NewGroups[Index], false);
-                    SortAllList(NewGroups);
+                    SortList(NewGroups[Index - 1]);
                     NumberOfCombinations++;
                     PrintLists(NewGroups, NumberOfCombinations, _DisplayMode);
                 }
 
                 //When that cant be done anymore, move one number even further back, and sort the groups.
                 MoveNumberToOtherList(NewGroups[Index - 2], NewGroups[Index - 1], false);
-                SortAllList(NewGroups);
+                SortList(NewGroups[Index - 2]);
 
                 //Revert what was just done, and put all the numbers moved in the start back to the first list
                 for (int i = Index; i <= NumberOfGroups - 1; i++)
@@ -195,7 +196,8 @@ namespace SplitListIntoNGroups
                     while (NewGroups[i - 1][MaxIndexLength - 1] != 0)
                     {
                         MoveNumberToOtherList(NewGroups[i], NewGroups[i - 1], true);
-                        SortAllList(NewGroups);
+                        SortList(NewGroups[i]);
+                        SortList(NewGroups[i - 1]);
                     }
                 }
 
@@ -241,7 +243,26 @@ namespace SplitListIntoNGroups
         static private void SortAllList(List<List<int>> InputList)
         {
             for (int i = 0; i < InputList.Count; i++)
-                InputList[i].Sort((a, b) => a - b);
+            {
+                //InputList[i].Sort((a, b) => a - b);
+                SortList(InputList[i]);
+            }
+        }
+
+        static private void SortList(List<int> InputList)
+        {
+            //Insertion Sort
+            for (int i = 1; i < InputList.Count; i++)
+            {
+                if (InputList[i] < InputList[i - 1])
+                {
+                    int temp = InputList[i];
+                    int j;
+                    for (j = i; j > 0 && InputList[j - 1] > temp; j--)
+                        InputList[j] = InputList[j - 1];
+                    InputList[j] = temp;
+                }
+            }
         }
 
         //Prints all lists in a structured way
@@ -259,13 +280,21 @@ namespace SplitListIntoNGroups
                 if (Itteration % 1000 == 0)
                     InnerPrintLists(Groups, Itteration);
 
+            if (_DisplayMode == DisplayMode.Every10000)
+                if (Itteration % 10000 == 0)
+                    InnerPrintLists(Groups, Itteration);
+
+            if (_DisplayMode == DisplayMode.Every100000)
+                if (Itteration % 100000 == 0)
+                    InnerPrintLists(Groups, Itteration);
+
             if (_DisplayMode == DisplayMode.Normal)
                 InnerPrintLists(Groups, Itteration);
         }
 
         static private void InnerPrintLists(List<List<int>> Groups, int Itteration)
         {
-            string AddSpaces = "          : ";
+            string AddSpaces = "         : ";
             if (Itteration >= 10)
                 AddSpaces = "        : ";
             if (Itteration >= 100)
