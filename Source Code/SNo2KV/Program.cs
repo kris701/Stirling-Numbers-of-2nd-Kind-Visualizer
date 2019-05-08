@@ -6,6 +6,8 @@ namespace SplitListIntoNGroups
     {
         static void Main(string[] args)
         {
+            SNo2KV.SplitListIntoKGroupsFromList(new System.Collections.Generic.List<int>(new int[] { 4,5,7,11,21 }), 3, DisplayMode.Normal);
+
             //Sample of usage:
             //SplitListIntoKGroups( FromNumber, ToNumber, NumberOfGroups, DisplayMode)
             //SplitListIntoKGroups(List<int> SenderGroup, NumberOfGroups, DisplayMode)
